@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { Link, Route } from "react-router-dom";
 import { auth } from "./firebase";
+import Scheduled from "./Scheduled";
 
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
@@ -49,7 +50,7 @@ export function App(props) {
 
   return (
     <div>
-      <AppBar position="static" color="secondary">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <IconButton
             color="inherit"
@@ -98,6 +99,8 @@ export function App(props) {
           </ListItem>
         </List>
       </Drawer>
+      <Scheduled>
+      </Scheduled>
     </div>
   );
 }
