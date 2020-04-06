@@ -22,33 +22,33 @@ export default function ScheduledApptBox(props) {
         <CheckInDialog open={checkInOpen} onClose={() => {setCheckInOpen(false)}}/>
         <Table style={{width:650}}>
             <Card style={{marginTop:10}}>
-                <TableHead style={{display:'flex'}}>
-                    <TableCell align="right">Time</TableCell>
-                    <TableCell align="right">Dog1</TableCell>
-                    <TableCell align="right">DogType1</TableCell>
-                    <TableCell align="right">Bather</TableCell>
-                    <TableCell style={{display:'flex', flexGrow:1}}>Groomer</TableCell>
-                    <TableCell align="right" onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
+                <TableHead style={{display:'flex', justifyContent:'space-between'}}>
+                    <TableCell>Time</TableCell>
+                    <TableCell>Dog Name</TableCell>
+                    <TableCell>Dog Type</TableCell>
+                    <TableCell>Bather</TableCell>
+                    <TableCell>Groomer</TableCell>
+                    <TableCell><Button variant="contained" color="primary">Check-In</Button></TableCell>
                 </TableHead>
             </Card>
             <Card style={{marginTop:10}}>
-                <TableRow style={{display:'flex'}}>
-                    <TableCell align="right">8:00</TableCell>
-                    <TableCell align="right">Otto</TableCell>
-                    <TableCell align="right">Golden Doodle</TableCell>
-                    <TableCell align="right">Hannah</TableCell>
-                    <TableCell style={{display:'flex', flexGrow:1}}>Sarah</TableCell>
-                    <TableCell align="right"><Button variant="contained" color="primary">Check-In</Button></TableCell>
+                <TableRow style={{display:'flex', justifyContent:'space-between'}}>
+                    <TableCell >8:00</TableCell>
+                    <TableCell >Otto</TableCell>
+                    <TableCell >Golden Doodle</TableCell>
+                    <TableCell >Hannah</TableCell>
+                    <TableCell >Sarah</TableCell>
+                    <TableCell  onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
                 </TableRow>
             </Card>
             <Card style={{marginTop:10}}>
-                <TableRow style={{display:'flex'}}>
-                    <TableCell align="right">10:00</TableCell>
-                    <TableCell align="right">Saide</TableCell>
-                    <TableCell align="right">Shih Tzu</TableCell>
-                    <TableCell align="right">Rachel</TableCell>
-                    <TableCell style={{display:'flex', flexGrow:1}}>Chad</TableCell>
-                    <TableCell align="right"><Button variant="contained" color="primary">Check-In</Button></TableCell>
+                <TableRow style={{display:'flex', justifyContent:'space-between'}}>
+                    <TableCell>10:00</TableCell>
+                    <TableCell>Saide</TableCell>
+                    <TableCell>Shih Tzu</TableCell>
+                    <TableCell>Rachel</TableCell>
+                    <TableCell>Chad</TableCell>
+                    <TableCell onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
                 </TableRow>
             </Card>
         </Table>
