@@ -28,7 +28,7 @@ export default function ScheduledApptBox(props) {
                     <TableCell>Dog Type</TableCell>
                     <TableCell>Bather</TableCell>
                     <TableCell>Groomer</TableCell>
-                    <TableCell><Button variant="contained" color="primary">Check-In</Button></TableCell>
+                    <TableCell><Button variant="contained" color="primary">Action</Button></TableCell>
                 </TableHead>
             </Card>
             <Card style={{marginTop:10}}>

@@ -20,6 +20,11 @@ import Scheduled from "./Scheduled";
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [employees, setEmployees] = useState([
+    {id:0, name:"Amy"},
+    {id:1, name:"Allegra"},
+    {id:2, name:"Andrew"}
+  ])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(u => {
@@ -85,15 +90,13 @@ export function App(props) {
           <ListItem button>
             <ListItemText primary="Check-In Dogs" />
           </ListItem>
-          <ListItem button>
-            <ListItemText primary="Daily Schedule" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Hannah Berdan's Schedule" />
-          </ListItem>
-          <ListItem button>
-            <ListItemText primary="Monica's Schedule" />
-          </ListItem>
+          {employees.map((e) => {
+            return(
+              <ListItem button onClick={() => {setDrawerOpen(false)}}>
+              <ListItemText primary={e.name + "'s Schedule"}/>
+            </ListItem>
+            )
+          })}
           <ListItem button>
             <ListItemText primary="Payroll Summary" />
           </ListItem>

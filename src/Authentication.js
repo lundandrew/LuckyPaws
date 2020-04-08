@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { auth } from "./firebase";
+import { db } from "./firebase";
 
 export function SignIn(props) {
     const [email, setEmail] = useState("");
@@ -102,15 +103,14 @@ export function SignIn(props) {
   
       return unsubscribe;
     }, [props.history]);
-  
+
     const handleSignUp = () => {
-      auth
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {})
-        .catch(error => {
-          alert(error.message);
-        });
-    };
+        auth
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {})
+          .catch(error => {
+            alert(error.message);
+          })};
   
     return (
       <div>
@@ -180,4 +180,4 @@ export function SignIn(props) {
         </div>
       </div>
     );
-  }
+}

@@ -34,7 +34,7 @@ export default function CheckInDialog(props) {
             margin="dense"
             id="name"
             label="Scheduled Time"
-            type="time"
+            type="text"
             fullWidth
             defaultValue="8:00"
           />
@@ -103,7 +103,7 @@ export default function CheckInDialog(props) {
               margin="dense"
               id="name"
               label="Pickup Time"
-              type="time"
+              type="text"
               fullWidth
             />
           </FormControl>
