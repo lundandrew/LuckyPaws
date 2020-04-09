@@ -13,7 +13,9 @@ import { db } from "./firebase";
 import FormControl from '@material-ui/core/FormControl';
 
 export default function NewApptDialog(props) {
-
+  const [time, setTime] = useState("")
+  const [dogName, setDogName] = useState("")
+  const [dogType, setDogType] = useState("")
   const [bather, setBather] = useState("")
   const [groomer, setGroomer] = useState("")
 
@@ -23,6 +25,20 @@ export default function NewApptDialog(props) {
 
   const handleChangeTwo = (e) => {
     setGroomer(e.target.value);
+  }
+
+  const handleSaveAppointment = () => {
+    db.collection("appointments")
+      .add(
+        {time: time,
+        dogName: dogName,
+        dogType: dogType,
+        }).then(() => {
+          setTime("");
+          setDogName("");
+          setDogType("")
+          props.onClose();
+        })
   }
     return(
 <Dialog open={props.open} onClose = {props.onClose} maxWidth="xs">
@@ -35,6 +51,7 @@ export default function NewApptDialog(props) {
             label="Scheduled Time"
             type="email"
             fullWidth
+            onChange={(e) => {setTime(e.target.value)}}
           />
           <TextField
             margin="dense"
@@ -42,6 +59,7 @@ export default function NewApptDialog(props) {
             label="Dog Name"
             type="email"
             fullWidth
+            onChange={(e) => {setDogName(e.target.value)}}
           />
           <TextField
             margin="dense"
@@ -49,6 +67,7 @@ export default function NewApptDialog(props) {
             label="Dog Type"
             type="email"
             fullWidth
+            onChange={(e) => {setDogType(e.target.value)}}
           />
           <FormControl>
             <InputLabel id="demo-simple-select-label">Bather</InputLabel>
@@ -83,8 +102,8 @@ export default function NewApptDialog(props) {
           <Button color="primary" onClick={props.onClose}>
             Cancel
           </Button>
-          <Button  color="primary" onClick={props.onClose}>
-            Add To Schedule
+          <Button  color="primary" onClick={handleSaveAppointment}>
+            Add Appointment
           </Button>
         </DialogActions>
       </Dialog>

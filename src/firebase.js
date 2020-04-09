@@ -17,3 +17,13 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 
 export const db = firebase.firestore();
+
+export function snapshotToArray(snapshot) {
+  const updated_array = [];
+        snapshot.forEach(s => {
+          const data = s.data()
+          data.id = s.id
+          updated_array.push(data)
+        })
+    return updated_array
+}

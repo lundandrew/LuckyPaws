@@ -14,17 +14,13 @@ import {
   Typography
 } from "@material-ui/core";
 import { Link, Route } from "react-router-dom";
-import { auth } from "./firebase";
+import { auth, snapshotToArray, db } from "./firebase";
 import Scheduled from "./Scheduled";
 
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [employees, setEmployees] = useState([
-    {id:0, name:"Amy"},
-    {id:1, name:"Allegra"},
-    {id:2, name:"Andrew"}
-  ])
+  const [employees, setEmployees] = useState([])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(u => {
@@ -34,9 +30,16 @@ export function App(props) {
         props.history.push("/");
       }
     });
-
     return unsubscribe;
   }, [props.history]);
+
+  useEffect(() => {
+    const unsubscribe = db.collection('users').onSnapshot((snapshot) => {
+        const updated_employees = snapshotToArray(snapshot)
+        setEmployees(updated_employees)
+    })
+    return unsubscribe
+  }, [props])
 
   const handleSignOut = () => {
     auth
@@ -93,7 +96,7 @@ export function App(props) {
           {employees.map((e) => {
             return(
               <ListItem button onClick={() => {setDrawerOpen(false)}}>
-              <ListItemText primary={e.name + "'s Schedule"}/>
+              <ListItemText primary={e.email + "'s Schedule"}/>
             </ListItem>
             )
           })}

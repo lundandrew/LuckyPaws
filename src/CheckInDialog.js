@@ -15,6 +15,9 @@ import { db } from "./firebase";
 export default function CheckInDialog(props) {
   const [bather, setBather] = useState("")
   const [groomer, setGroomer] = useState("")
+  const [groomNotes, setGroomNotes] = useState("")
+  const [quote, setQuote] = useState("")
+  const [pickup, setPickup] = useState("")
 
   const handleChangeOne = (e) => {
     setBather(e.target.value);
@@ -22,6 +25,18 @@ export default function CheckInDialog(props) {
 
   const handleChangeTwo = (e) => {
     setGroomer(e.target.value);
+  }
+
+  const handleSaveAppointment = () => {
+    db.collection("appointments")
+      .doc(props.appointments.id)
+      .update(
+        {groomNotes: groomNotes,
+        quote: quote,
+        pickup: pickup,
+        }).then(() => {
+          props.onClose();
+        })
   }
 
   
@@ -36,7 +51,7 @@ export default function CheckInDialog(props) {
             label="Scheduled Time"
             type="text"
             fullWidth
-            defaultValue="8:00"
+            defaultValue={props.appointments.time}
           />
           <TextField
             margin="dense"
@@ -44,7 +59,7 @@ export default function CheckInDialog(props) {
             label="Dog Name"
             type="text"
             fullWidth
-            defaultValue="Otto"
+            defaultValue={props.appointments.dogName}
           />
           <TextField
             margin="dense"
@@ -52,7 +67,7 @@ export default function CheckInDialog(props) {
             label="Dog Type"
             type="text"
             fullWidth
-            defaultValue="Golden Doodle"
+            defaultValue={props.appointments.dogType}
           />
           <FormControl>
             <InputLabel id="demo-simple-select-label">Bather</InputLabel>
@@ -91,6 +106,8 @@ export default function CheckInDialog(props) {
               fullWidth
               multiline
               rows="4"
+              onChange={(e) => {setGroomNotes(e.target.value)}}
+              defaultValue={props.appointments.groomNotes}
             />
             <TextField
               margin="dense"
@@ -98,6 +115,8 @@ export default function CheckInDialog(props) {
               label="Estimated Quote"
               type="number"
               fullWidth
+              onChange={(e) => {setQuote(e.target.value)}}
+              defaultValue={props.appointments.quote}
             />
             <TextField
               margin="dense"
@@ -105,6 +124,8 @@ export default function CheckInDialog(props) {
               label="Pickup Time"
               type="text"
               fullWidth
+              onChange={(e) => {setPickup(e.target.value)}}
+              defaultValue={props.appointments.pickup}
             />
           </FormControl>
         </DialogContent>
@@ -112,7 +133,7 @@ export default function CheckInDialog(props) {
           <Button color="primary" onClick={props.onClose}>
             Cancel
           </Button>
-          <Button  color="primary" onClick={props.onClose}>
+          <Button  color="primary" onClick={handleSaveAppointment}>
             Check-In
           </Button>
         </DialogActions>

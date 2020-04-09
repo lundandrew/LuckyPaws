@@ -19,39 +19,17 @@ export default function ScheduledApptBox(props) {
 
     return(
     <div>
-        <CheckInDialog open={checkInOpen} onClose={() => {setCheckInOpen(false)}}/>
-        <Table style={{width:650}}>
-            <Card style={{marginTop:10}}>
-                <TableHead style={{display:'flex', justifyContent:'space-between'}}>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Dog Name</TableCell>
-                    <TableCell>Dog Type</TableCell>
-                    <TableCell>Bather</TableCell>
-                    <TableCell>Groomer</TableCell>
-                    <TableCell><Button variant="contained" color="primary">Action</Button></TableCell>
-                </TableHead>
-            </Card>
+        <CheckInDialog appointments={props.appointments} open={checkInOpen} onClose={() => {setCheckInOpen(false)}}/>
             <Card style={{marginTop:10}}>
                 <TableRow style={{display:'flex', justifyContent:'space-between'}}>
-                    <TableCell >8:00</TableCell>
-                    <TableCell >Otto</TableCell>
-                    <TableCell >Golden Doodle</TableCell>
+                    <TableCell >{props.appointments.time}</TableCell>
+                    <TableCell >{props.appointments.dogName}</TableCell>
+                    <TableCell >{props.appointments.dogType}</TableCell>
                     <TableCell >Hannah</TableCell>
                     <TableCell >Sarah</TableCell>
                     <TableCell  onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
                 </TableRow>
             </Card>
-            <Card style={{marginTop:10}}>
-                <TableRow style={{display:'flex', justifyContent:'space-between'}}>
-                    <TableCell>10:00</TableCell>
-                    <TableCell>Saide</TableCell>
-                    <TableCell>Shih Tzu</TableCell>
-                    <TableCell>Rachel</TableCell>
-                    <TableCell>Chad</TableCell>
-                    <TableCell onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
-                </TableRow>
-            </Card>
-        </Table>
     </div>
     )
 }
