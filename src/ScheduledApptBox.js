@@ -25,8 +25,8 @@ export default function ScheduledApptBox(props) {
                     <TableCell >{props.appointments.time}</TableCell>
                     <TableCell >{props.appointments.dogName}</TableCell>
                     <TableCell >{props.appointments.dogType}</TableCell>
-                    <TableCell >Hannah</TableCell>
-                    <TableCell >Sarah</TableCell>
+                    <TableCell >{props.appointments.bather}</TableCell>
+                    <TableCell >{props.appointments.groomer}</TableCell>
                     <TableCell  onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
                 </TableRow>
             </Card>

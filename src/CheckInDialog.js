@@ -19,14 +19,6 @@ export default function CheckInDialog(props) {
   const [quote, setQuote] = useState("")
   const [pickup, setPickup] = useState("")
 
-  const handleChangeOne = (e) => {
-    setBather(e.target.value);
-  }
-
-  const handleChangeTwo = (e) => {
-    setGroomer(e.target.value);
-  }
-
   const handleSaveAppointment = () => {
     db.collection("appointments")
       .doc(props.appointments.id)
@@ -38,7 +30,6 @@ export default function CheckInDialog(props) {
           props.onClose();
         })
   }
-
   
     return(
         <Dialog open={props.open} onClose = {props.onClose} maxWidth="xs">
@@ -70,12 +61,10 @@ export default function CheckInDialog(props) {
             defaultValue={props.appointments.dogType}
           />
           <FormControl>
-            <InputLabel id="demo-simple-select-label">Bather</InputLabel>
+            <InputLabel>Bather</InputLabel>
             <Select
               style={{width:390}}
-              onChange={handleChangeOne}
-              value={bather}
-              defaultValue="Hannah"
+              defaultValue={props.appointments.bather}
             >
               <MenuItem value={"Hannah"}>Hannah</MenuItem>
               <MenuItem value={"Cheri"}>Cheri</MenuItem>
@@ -85,12 +74,10 @@ export default function CheckInDialog(props) {
             </Select>
           </FormControl>
           <FormControl>
-            <InputLabel id="demo-simple-select-label">Groomer</InputLabel>
+            <InputLabel>Groomer</InputLabel>
             <Select
               style={{width:390}}
-              onChange={handleChangeTwo}
-              value={groomer}
-              defaultValue="Sarah"
+              defaultValue={props.appointments.groomer}
             >
               <MenuItem value={"Hannah"}>Hannah</MenuItem>
               <MenuItem value={"Cheri"}>Cheri</MenuItem>

@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { auth } from "./firebase";
 import { db } from "./firebase";
+import AddName from "./AddName"
 
 export function SignIn(props) {
     const [email, setEmail] = useState("");
@@ -90,8 +91,6 @@ export function SignIn(props) {
   export function SignUp(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [firstName, setFirstName] =useState("");
-    const [lastName, setLastName] = useState("")
   
     useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged(u => {
@@ -123,24 +122,6 @@ export function SignIn(props) {
         </AppBar>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Paper style={{ width: "480px", marginTop: "50px", padding: "30px" }}>
-            <div style={{display:"flex", justifyContent: 'space-between', marginBottom:30}}>
-              <TextField
-                variant="outlined"
-                placeholder={"First Name"}
-                value={firstName}
-                onChange={e => {
-                  setFirstName(e.target.value);
-                }}
-              />
-              <TextField
-                variant="outlined"
-                placeholder={"Last Name"}
-                value={lastName}
-                onChange={e => {
-                  setLastName(e.target.value);
-                }}
-              />
-            </div>
             <TextField
               placeholder={"Email"}
               variant="outlined"

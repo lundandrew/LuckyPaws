@@ -16,11 +16,13 @@ import {
 import { Link, Route } from "react-router-dom";
 import { auth, snapshotToArray, db } from "./firebase";
 import Scheduled from "./Scheduled";
+import AddName from "./AddName"
 
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [employees, setEmployees] = useState([])
+  const [addNameOpen, setAddNameOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(u => {
@@ -78,10 +80,14 @@ export function App(props) {
           <Typography color="inherit" style={{ marginRight: "30px" }}>
             Hi! {user.email}
           </Typography>
-          <Button color="inherit" onClick={handleSignOut}>
+          <Button color="inherit" variant="outlined" onClick={handleSignOut}>
             Sign out
           </Button>
+          <Button color="inherit" variant="outlined" style={{marginLeft:10}} onClick={() => {setAddNameOpen(true)}}>
+            Add Your Name
+          </Button>
         </Toolbar>
+        <AddName user={user} open = {addNameOpen} onClose={() => {setAddNameOpen(false)}}/>
       </AppBar>
       <Drawer
         open={drawer_open}
@@ -96,7 +102,7 @@ export function App(props) {
           {employees.map((e) => {
             return(
               <ListItem button onClick={() => {setDrawerOpen(false)}}>
-              <ListItemText primary={e.email + "'s Schedule"}/>
+              <ListItemText primary={e.firstName + " " + e.lastName + "'s Schedule"}/>
             </ListItem>
             )
           })}

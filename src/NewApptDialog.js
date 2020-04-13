@@ -6,106 +6,128 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { db } from "./firebase";
-import FormControl from '@material-ui/core/FormControl';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import { db, snapshotToArray } from "./firebase";
+import FormControl from "@material-ui/core/FormControl";
 
 export default function NewApptDialog(props) {
-  const [time, setTime] = useState("")
-  const [dogName, setDogName] = useState("")
-  const [dogType, setDogType] = useState("")
-  const [bather, setBather] = useState("")
-  const [groomer, setGroomer] = useState("")
-
-  const handleChangeOne = (e) => {
-    setBather(e.target.value);
-  }
-
-  const handleChangeTwo = (e) => {
-    setGroomer(e.target.value);
-  }
+  const [time, setTime] = useState("");
+  const [dogName, setDogName] = useState("");
+  const [dogType, setDogType] = useState("");
+  const [bather, setBather] = useState("");
+  const [groomer, setGroomer] = useState("");
+  const [employees, setEmployees] = useState([]);
 
   const handleSaveAppointment = () => {
     db.collection("appointments")
-      .add(
-        {time: time,
+      .add({
+        time: time,
         dogName: dogName,
         dogType: dogType,
-        }).then(() => {
-          setTime("");
-          setDogName("");
-          setDogType("")
-          props.onClose();
-        })
-  }
-    return(
-<Dialog open={props.open} onClose = {props.onClose} maxWidth="xs">
-        <DialogTitle>New Appointment</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Scheduled Time"
-            type="email"
-            fullWidth
-            onChange={(e) => {setTime(e.target.value)}}
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            label="Dog Name"
-            type="email"
-            fullWidth
-            onChange={(e) => {setDogName(e.target.value)}}
-          />
-          <TextField
-            margin="dense"
-            id="name"
-            label="Dog Type"
-            type="email"
-            fullWidth
-            onChange={(e) => {setDogType(e.target.value)}}
-          />
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Bather</InputLabel>
-            <Select
-              style={{width:390}}
-              onChange={handleChangeOne}
-              value={bather}
-            >
-              <MenuItem value={"Hannah"}>Hannah</MenuItem>
-              <MenuItem value={"Cheri"}>Cheri</MenuItem>
-              <MenuItem value={"Monica"}>Monica</MenuItem>
-              <MenuItem value={"Rachel"}>Rachel</MenuItem>
-              <MenuItem value={"Sarah"}>Sarah</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Groomer</InputLabel>
-            <Select
-              style={{width:390}}
-              onChange={handleChangeTwo}
-              value={groomer}
-            >
-              <MenuItem value={"Hannah"}>Hannah</MenuItem>
-              <MenuItem value={"Cheri"}>Cheri</MenuItem>
-              <MenuItem value={"Monica"}>Monica</MenuItem>
-              <MenuItem value={"Rachel"}>Rachel</MenuItem>
-              <MenuItem value={"Sarah"}>Sarah</MenuItem>
-            </Select>
-          </FormControl>
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary" onClick={props.onClose}>
-            Cancel
-          </Button>
-          <Button  color="primary" onClick={handleSaveAppointment}>
-            Add Appointment
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
-  }
+        bather: bather,
+        groomer: groomer,
+      })
+      .then(() => {
+        setTime("");
+        setDogName("");
+        setDogType("");
+        setBather("");
+        setGroomer("");
+        props.onClose();
+      });
+  };
+  useEffect(() => {
+    const unsubscribe = db.collection("users").onSnapshot((snapshot) => {
+      const updated_employees = snapshotToArray(snapshot);
+      setEmployees(updated_employees);
+    });
+    return unsubscribe;
+  }, [props]);
+
+  return (
+    <Dialog open={props.open} onClose={props.onClose} maxWidth="xs">
+      <DialogTitle>New Appointment</DialogTitle>
+      <DialogContent>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Scheduled Time"
+          type="email"
+          fullWidth
+          onChange={(e) => {
+            setTime(e.target.value);
+          }}
+        />
+        <TextField
+          margin="dense"
+          id="name"
+          label="Dog Name"
+          type="email"
+          fullWidth
+          onChange={(e) => {
+            setDogName(e.target.value);
+          }}
+        />
+        <TextField
+          margin="dense"
+          id="name"
+          label="Dog Type"
+          type="email"
+          fullWidth
+          onChange={(e) => {
+            setDogType(e.target.value);
+          }}
+        />
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">Bather</InputLabel>
+          <Select
+            style={{ width: 390 }}
+            onChange={(e) => {
+              setBather(e.target.value);
+            }}
+            value={bather}
+          >
+            {employees.map((e) => {
+              return (
+                <MenuItem employees={e} value={e.firstName}>
+                  {" "}
+                  {e.firstName + " " + e.lastName}{" "}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel id="demo-simple-select-label">Groomer</InputLabel>
+          <Select
+            style={{ width: 390 }}
+            onChange={(e) => {
+              setGroomer(e.target.value);
+            }}
+            value={groomer}
+          >
+            {employees.map((e) => {
+              return (
+                <MenuItem employees={e} value={e.firstName}>
+                  {" "}
+                  {e.firstName + " " + e.lastName}{" "}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      </DialogContent>
+      <DialogActions>
+        <Button color="primary" onClick={props.onClose}>
+          Cancel
+        </Button>
+        <Button color="primary" onClick={handleSaveAppointment}>
+          Add Appointment
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
