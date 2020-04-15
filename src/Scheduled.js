@@ -21,7 +21,7 @@ export default function Scheduled(props) {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        const unsubscribe = db.collection('appointments').onSnapshot((snapshot) => {
+        const unsubscribe = db.collection('appointments').where("status","==","pending").onSnapshot((snapshot) => {
             const updated_appointments = snapshotToArray(snapshot)
             setAppointments(updated_appointments)
         })
@@ -52,7 +52,7 @@ export default function Scheduled(props) {
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent:"center"}}>
                         {appointments.map((a) => {
                             return (
-                                <ScheduledApptBox appointments={a}/> 
+                                <ScheduledApptBox scheduled={a}/> 
                             )
                         })}
                     </div>

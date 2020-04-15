@@ -28,6 +28,7 @@ export default function NewApptDialog(props) {
         dogType: dogType,
         bather: bather,
         groomer: groomer,
+        status: "pending",
       })
       .then(() => {
         setTime("");
@@ -82,7 +83,7 @@ export default function NewApptDialog(props) {
           }}
         />
         <FormControl>
-          <InputLabel id="demo-simple-select-label">Bather</InputLabel>
+          <InputLabel>Bather</InputLabel>
           <Select
             style={{ width: 390 }}
             onChange={(e) => {
@@ -101,7 +102,7 @@ export default function NewApptDialog(props) {
           </Select>
         </FormControl>
         <FormControl>
-          <InputLabel id="demo-simple-select-label">Groomer</InputLabel>
+          <InputLabel>Groomer</InputLabel>
           <Select
             style={{ width: 390 }}
             onChange={(e) => {

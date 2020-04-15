@@ -37,7 +37,7 @@ export default function AddName(props) {
               placeholder={"First Name"}
               variant="outlined"
               fullWidth={true}
-              value={firstName}
+              defaultValue={firstName}
               onChange={e => {
                 setFirstName(e.target.value);
               }}
@@ -47,7 +47,7 @@ export default function AddName(props) {
               variant="outlined"
               fullWidth={true}
               style={{ marginTop: "10px" }}
-              value={lastName}
+              defaultValue={lastName}
               onChange={e => {
                 setLastName(e.target.value);
               }}

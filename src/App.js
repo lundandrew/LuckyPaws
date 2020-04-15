@@ -17,6 +17,7 @@ import { Link, Route } from "react-router-dom";
 import { auth, snapshotToArray, db } from "./firebase";
 import Scheduled from "./Scheduled";
 import AddName from "./AddName"
+import GroomerSchedule from "./GroomerSchedule"
 
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
@@ -78,7 +79,7 @@ export function App(props) {
             My App
           </Typography>
           <Typography color="inherit" style={{ marginRight: "30px" }}>
-            Hi! {user.email}
+            Hi! {user.firstName}
           </Typography>
           <Button color="inherit" variant="outlined" onClick={handleSignOut}>
             Sign out
@@ -95,13 +96,13 @@ export function App(props) {
           setDrawerOpen(false);
         }}
       >
-        <List style={{width:"480px"}} >
-          <ListItem button>
+        <List component ="nav" style={{width:"350px"}} >
+          <ListItem button to={"/app/checkin"} component = {Link} onClick={() => {setDrawerOpen(false)}}>
             <ListItemText primary="Check-In Dogs" />
           </ListItem>
           {employees.map((e) => {
             return(
-              <ListItem button onClick={() => {setDrawerOpen(false)}}>
+              <ListItem button to={"/app/schedule/" + e.id + "/"} component={Link} onClick={() => {setDrawerOpen(false)}}>
               <ListItemText primary={e.firstName + " " + e.lastName + "'s Schedule"}/>
             </ListItem>
             )
@@ -111,8 +112,13 @@ export function App(props) {
           </ListItem>
         </List>
       </Drawer>
-      <Scheduled>
-      </Scheduled>
+      <Route path="/app/schedule/:useruid/" render={(routeProps) => {
+        return (<GroomerSchedule {...routeProps}/>)
+      }} />
+      <Route path="/app/checkin" render={(routeProps) => {
+        return (<Scheduled {...routeProps}/>
+          )
+      }} />
     </div>
   );
 }

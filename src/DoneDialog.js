@@ -12,7 +12,7 @@ import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import { db, snapshotToArray } from "./firebase";
 
-export default function CheckInDialog(props) {
+export default function Done (props) {
   const [bather, setBather] = useState("")
   const [groomer, setGroomer] = useState("")
   const [groomNotes, setGroomNotes] = useState("")
@@ -27,7 +27,7 @@ export default function CheckInDialog(props) {
         {groomNotes: groomNotes,
         quote: quote,
         pickup: pickup,
-        status: "checkedin"
+        status: "complete"
         }).then(() => {
           props.onClose();
         })
@@ -143,7 +143,7 @@ export default function CheckInDialog(props) {
             Cancel
           </Button>
           <Button  color="primary" onClick={handleSaveAppointment}>
-            Check-In
+            Done!
           </Button>
         </DialogActions>
       </Dialog>
