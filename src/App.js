@@ -18,6 +18,7 @@ import { auth, snapshotToArray, db } from "./firebase";
 import Scheduled from "./Scheduled";
 import AddName from "./AddName"
 import GroomerSchedule from "./GroomerSchedule"
+import Payroll from "./Payroll"
 
 export function App(props) {
   const [drawer_open, setDrawerOpen] = useState(false);
@@ -79,7 +80,7 @@ export function App(props) {
             My App
           </Typography>
           <Typography color="inherit" style={{ marginRight: "30px" }}>
-            Hi! {user.firstName}
+            Hi! {user.email}
           </Typography>
           <Button color="inherit" variant="outlined" onClick={handleSignOut}>
             Sign out
@@ -107,7 +108,7 @@ export function App(props) {
             </ListItem>
             )
           })}
-          <ListItem button>
+          <ListItem button to={"/app/payroll"} component={Link} onClick={() => {setDrawerOpen(false)}}>
             <ListItemText primary="Payroll Summary" />
           </ListItem>
         </List>
@@ -117,6 +118,10 @@ export function App(props) {
       }} />
       <Route path="/app/checkin" render={(routeProps) => {
         return (<Scheduled {...routeProps}/>
+          )
+      }} />
+      <Route path="/app/payroll" render={(routeProps) => {
+        return (<Payroll {...routeProps}/>
           )
       }} />
     </div>

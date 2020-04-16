@@ -18,10 +18,11 @@ export default function Completed(props) {
 
     const handleSaveDialog = () => {
         db.collection("appointments")
-          .doc(props.appointments.id)
+          .doc(props.completed.id)
           .update(
             {tip: tip,
              totalPrice: totalPrice,
+             status: "payroll",
             })
           .then(() => {
             handleClose();
@@ -33,65 +34,60 @@ export default function Completed(props) {
       };
 
     return(
-    <div>
-        <div>
-                <Card style={{marginTop:10}}>
-                    <TableRow style={{display:'flex', justifyContent:'space-between'}}>
-                        <TableCell >{props.completed.time}</TableCell>
-                        <TableCell >{props.completed.dogName}</TableCell>
-                        <TableCell >{props.completed.dogType}</TableCell>
-                        <TableCell >{props.completed.bather}</TableCell>
-                        <TableCell >{props.completed.groomer}</TableCell>
-                        <TableCell >{props.completed.groomNotes}</TableCell>
-                        <TableCell >{props.completed.pickup}</TableCell>
-                        <TableCell >{props.completed.quote}</TableCell>
-                        <TableCell  onClick={() => {setDialogOpen(true)}}><Button variant="contained" color="primary">Add Tip!</Button></TableCell>
-                    </TableRow>
-                </Card>
-        </div>
-        <div>
-            <Dialog open={dialogOpen} maxWidth="xs">
-                <DialogTitle style={{display:'flex', justifyContent:'center'}}>Price and Tip</DialogTitle>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Paper style={{ width: "480px", padding: "30px" }}>
-                        <TextField
-                        placeholder={"Total Price"}
-                        variant="outlined"
-                        fullWidth={true}
-                        onChange={e => {
-                            setTotalPrice(e.target.value);
-                        }}
-                        />
-                        <TextField
-                        placeholder="Tip"
-                        variant="outlined"
-                        fullWidth={true}
-                        style={{ marginTop: "10px" }}
-                        onChange={e => {
-                            setTip(e.target.value);
-                        }}
-                        />
-                        <div
-                            style={{
-                                display: "flex",
-                                justifyContent: "flex-end",
-                                alignItems: "center",
-                                marginTop: "10px"
+        <TableRow >
+            <TableCell align="center" >{props.completed.time}</TableCell>
+            <TableCell align="center" >{props.completed.dogName}</TableCell>
+            <TableCell align="center" >{props.completed.dogType}</TableCell>
+            <TableCell align="center" >{props.completed.bather}</TableCell>
+            <TableCell align="center" >{props.completed.groomer}</TableCell>
+            <TableCell align="center" >{props.completed.groomNotes}</TableCell>
+            <TableCell align="center" >{props.completed.pickup}</TableCell>
+            <TableCell align="center" >{props.completed.quote}</TableCell>
+            <TableCell align="right"  onClick={() => {setDialogOpen(true)}}><Button variant="contained" color="primary">Add Tip!</Button></TableCell>
+            <div>
+                <Dialog open={dialogOpen} maxWidth="xs">
+                    <DialogTitle style={{display:'flex', justifyContent:'center'}}>Price and Tip</DialogTitle>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Paper style={{ width: "480px", padding: "30px" }}>
+                            <TextField
+                            placeholder={"Total Price"}
+                            variant="outlined"
+                            fullWidth={true}
+                            onChange={e => {
+                                setTotalPrice(e.target.value);
                             }}
-                            >
-                            <DialogActions>
-                            <Button color="primary" variant="contained" onClick={props.onClose}>
-                                Cancel
-                            </Button>
-                            <Button  color="primary" variant="contained" onClick={handleSaveDialog}>
-                                Add Price and Tip
-                            </Button>
-                            </DialogActions>
-                        </div>
-                    </Paper>
-                </div>
-            </Dialog>
-        </div>
-    </div>
+                            />
+                            <TextField
+                            placeholder="Tip"
+                            variant="outlined"
+                            fullWidth={true}
+                            style={{ marginTop: "10px" }}
+                            onChange={e => {
+                                setTip(e.target.value);
+                            }}
+                            />
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    alignItems: "center",
+                                    marginTop: "10px"
+                                }}
+                                >
+                                <DialogActions>
+                                <Button color="primary" variant="contained" onClick={props.onClose}>
+                                    Cancel
+                                </Button>
+                                <Button  color="primary" variant="contained" onClick={handleSaveDialog}>
+                                    Add Price and Tip
+                                </Button>
+                                </DialogActions>
+                            </div>
+                        </Paper>
+                    </div>
+                </Dialog>
+            </div>
+        </TableRow>
+        
     )
 }

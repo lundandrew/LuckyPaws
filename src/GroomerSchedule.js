@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import ScheduledApptBox from "./ScheduledApptBox";
 import TableCell from '@material-ui/core/TableCell';
 import Table from '@material-ui/core/Table';
-import Card from '@material-ui/core/Card';
 import TableHead from '@material-ui/core/TableHead';
-
+import TableBody from '@material-ui/core/TableBody';
 import {
 Paper,
 Typography,
@@ -47,102 +46,95 @@ export default function GroomerSchedule(props) {
     return(
         <div style={{display:'flex', justifyContent:"center", flexDirection:"column"}}>
         <div style={{display:'flex', justifyContent:"center"}}>
-            <Paper variant="outlined" style={{width:800, marginTop:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
+            <Paper elevation={5} style={{width:800, marginTop:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
                 <Typography 
                     variant="h4"
                     color="inherit"
                     style={{display:'flex', justifyContent: "center", padding:10}}>
                         My Assignments:
                 </Typography>
-                <div style={{display: 'flex', justifyContent: "center"}}>
-                <Table style={{width:650}}>
-                    <Card style={{marginTop:10}}>
-                        <TableHead style={{display:'flex', justifyContent:'space-between'}}>
-                            <TableCell>Time</TableCell>
-                            <TableCell>Dog Name</TableCell>
-                            <TableCell>Dog Type</TableCell>
-                            <TableCell>Bather</TableCell>
-                            <TableCell>Groomer</TableCell>
-                            <TableCell><Button variant="contained" color="primary">Action</Button></TableCell>
-                        </TableHead>
-                    </Card>
-                    <div style={{display: 'flex', flexDirection: 'column', justifyContent:"center"}}>
-                        {scheduled.map((a) => {
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableCell align="center"><Typography variant="button">Time</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Dog Name</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Dog Type</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Bather</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Groomer</Typography></TableCell>
+                        <TableCell align="right"><Typography variant="button">Action</Typography></TableCell>
+                    </TableHead>
+                    <TableBody>
+                        {scheduled
+                        .filter(groomer => {
+                            return groomer.groomer === "Cheri"
+                        })
+                        .map((a) => {
                             return (
                                 <ScheduledApptBox scheduled={a}/> 
                             )
                         })}
-                    </div>
+                    </TableBody>
                 </Table>
-                </div>
             </Paper>            
         </div>
         <div style={{display:'flex', justifyContent:"center"}}>
-            <Paper variant="outlined" style={{width:1000, marginTop:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
+            <Paper elevation={5} style={{width:1000, marginTop:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
                 <Typography 
                     variant="h4"
                     color="inherit"
                     style={{display:'flex', justifyContent: "center", padding:10}}>
                         Checked-in:
                 </Typography>
-                <div style={{display: 'flex', justifyContent: "center"}}>
-                <Table style={{width:900}}>
-                    <Card style={{marginTop:10}}>
-                        <TableHead style={{display:'flex', justifyContent:'space-between'}}>
-                            <TableCell>Checked-In Time</TableCell>
-                            <TableCell>Dog Name</TableCell>
-                            <TableCell>Dog Type</TableCell>
-                            <TableCell>Bather</TableCell>
-                            <TableCell>Groomer</TableCell>
-                            <TableCell>Groom Notes</TableCell>
-                            <TableCell>Out Time</TableCell>
-                            <TableCell>Quote</TableCell>
-                            <TableCell><Button variant="contained" color="primary">Action</Button></TableCell>
+                <Table>
+                        <TableHead>
+                            <TableCell align="center"><Typography variant="button">Time</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Dog Name</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Dog Type</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Bather</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Groomer</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Groom Notes</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Out Time</Typography></TableCell>
+                            <TableCell align="center"><Typography variant="button">Quote</Typography></TableCell>
+                            <TableCell align="center"><Typography variant ="button">Bathed?</Typography></TableCell>
+                            <TableCell align="right"><Typography variant="button">Action</Typography></TableCell>
                         </TableHead>
-                    </Card>
-                    <div style={{display: 'flex', flexDirection: 'column', justifyContent:"center"}}>
-                        {appointments.map((a) => {
-                            return (
-                                <ApptBox appointments={a}/> 
-                            )
-                        })}
-                    </div>
+                        <TableBody>
+                            {appointments.map((a) => {
+                                return (
+                                    <ApptBox appointments={a}/> 
+                                )
+                            })}
+                        </TableBody>
                 </Table>
-                </div>
             </Paper>
         </div>
         <div style={{display:'flex', justifyContent:"center"}}>
-            <Paper variant="outlined" style={{width:1000, marginTop:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
+            <Paper elevation={5} style={{width:1000, marginTop:"30px", marginBottom:"30px", display:'flex', flexDirection:"column", justifyContent:"center"}}>
                 <Typography 
                     variant="h4"
                     color="inherit"
                     style={{display:'flex', justifyContent: "center", padding:10}}>
                         Completed:
                 </Typography>
-                <div style={{display: 'flex', justifyContent: "center"}}>
-                <Table style={{width:900}}>
-                    <Card style={{marginTop:10}}>
-                        <TableHead style={{display:'flex', justifyContent:'space-between'}}>
-                            <TableCell>Time</TableCell>
-                            <TableCell>Dog Name</TableCell>
-                            <TableCell>Dog Type</TableCell>
-                            <TableCell>Bather</TableCell>
-                            <TableCell>Groomer</TableCell>
-                            <TableCell>Groom Notes</TableCell>
-                            <TableCell>Out Time</TableCell>
-                            <TableCell>Quote</TableCell>
-                            <TableCell><Button variant="contained" color="primary">Action</Button></TableCell>
-                        </TableHead>
-                    </Card>
-                    <div style={{display: 'flex', flexDirection: 'column', justifyContent:"center"}}>
+                <Table>
+                    <TableHead>
+                        <TableCell align="center"><Typography variant="button">Time</Typography>Time</TableCell>
+                        <TableCell align="center"><Typography variant="button">Dog Name</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Dog Type</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Bather</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Groomer</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Groom Notes</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Out Time</Typography></TableCell>
+                        <TableCell align="center"><Typography variant="button">Quote</Typography></TableCell>
+                        <TableCell align="right"><Typography variant="button">Action</Typography></TableCell>
+                    </TableHead>
+                    <TableBody>
                         {completedAppt.map((a) => {
                             return (
                                 <Completed completed={a}/> 
                             )
                         })}
-                    </div>
+                    </TableBody>
                 </Table>
-                </div>
             </Paper>
         </div>
         </div>

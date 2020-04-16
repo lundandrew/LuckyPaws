@@ -19,6 +19,7 @@ export default function NewApptDialog(props) {
   const [bather, setBather] = useState("");
   const [groomer, setGroomer] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [groomerId, setGroomerId] = useState("");
 
   const handleSaveAppointment = () => {
     db.collection("appointments")
@@ -29,6 +30,7 @@ export default function NewApptDialog(props) {
         bather: bather,
         groomer: groomer,
         status: "pending",
+        groomerId: groomerId,
       })
       .then(() => {
         setTime("");

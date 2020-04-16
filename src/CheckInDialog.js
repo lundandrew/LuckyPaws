@@ -13,8 +13,8 @@ import FormControl from '@material-ui/core/FormControl';
 import { db, snapshotToArray } from "./firebase";
 
 export default function CheckInDialog(props) {
-  const [bather, setBather] = useState("")
-  const [groomer, setGroomer] = useState("")
+  const [bather, setBather] = useState(props.scheduled.bather)
+  const [groomer, setGroomer] = useState(props.scheduled.groomer)
   const [groomNotes, setGroomNotes] = useState("")
   const [quote, setQuote] = useState("")
   const [pickup, setPickup] = useState("")
@@ -22,13 +22,21 @@ export default function CheckInDialog(props) {
 
   const handleSaveAppointment = () => {
     db.collection("appointments")
-      .doc(props.appointments.id)
-      .update(
-        {groomNotes: groomNotes,
+      .doc(props.scheduled.id)
+      .update({
+        groomNotes: groomNotes,
         quote: quote,
         pickup: pickup,
-        status: "checkedin"
+        status: "checkedin",
+        bather: bather,
+        groomer: groomer,
         }).then(() => {
+          setBather("");
+          setGroomer("");
+          setGroomNotes("");
+          setQuote("");
+          setPickup("");
+          setEmployees([]);
           props.onClose();
         })
   }
@@ -46,29 +54,32 @@ export default function CheckInDialog(props) {
         <DialogTitle>New Appointment</DialogTitle>
         <DialogContent>
           <TextField
+            disabled
             autoFocus
             margin="dense"
             id="name"
             label="Scheduled Time"
             type="text"
             fullWidth
-            defaultValue={props.appointments.time}
+            defaultValue={props.scheduled.time}
           />
           <TextField
+            disabled
             margin="dense"
             id="name"
             label="Dog Name"
             type="text"
             fullWidth
-            defaultValue={props.appointments.dogName}
+            defaultValue={props.scheduled.dogName}
           />
           <TextField
+            disabled
             margin="dense"
             id="name"
             label="Dog Type"
             type="text"
             fullWidth
-            defaultValue={props.appointments.dogType}
+            defaultValue={props.scheduled.dogType}
           />
           <FormControl>
             <InputLabel>Bather</InputLabel>
@@ -77,7 +88,7 @@ export default function CheckInDialog(props) {
               onChange={(e) => {
                 setBather(e.target.value);
               }}
-              defaultValue={props.appointments.bather}
+              defaultValue={props.scheduled.bather}
             >
               {employees.map((e) => {
                 return (
@@ -96,7 +107,7 @@ export default function CheckInDialog(props) {
               onChange={(e) => {
                 setGroomer(e.target.value);
               }}
-              defaultValue={props.appointments.groomer}
+              defaultValue={props.scheduled.groomer}
             >
               {employees.map((e) => {
                 return (
@@ -117,7 +128,6 @@ export default function CheckInDialog(props) {
             multiline
             rows="4"
             onChange={(e) => {setGroomNotes(e.target.value)}}
-            defaultValue={props.appointments.groomNotes}
           />
           <TextField
             margin="dense"
@@ -126,7 +136,6 @@ export default function CheckInDialog(props) {
             type="number"
             fullWidth
             onChange={(e) => {setQuote(e.target.value)}}
-            defaultValue={props.appointments.quote}
           />
           <TextField
             margin="dense"
@@ -135,14 +144,13 @@ export default function CheckInDialog(props) {
             type="text"
             fullWidth
             onChange={(e) => {setPickup(e.target.value)}}
-            defaultValue={props.appointments.pickup}
           />
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={props.onClose}>
+          <Button variant="contained" color="primary" onClick={props.onClose}>
             Cancel
           </Button>
-          <Button  color="primary" onClick={handleSaveAppointment}>
+          <Button  variant="contained" color="primary" onClick={handleSaveAppointment}>
             Check-In
           </Button>
         </DialogActions>

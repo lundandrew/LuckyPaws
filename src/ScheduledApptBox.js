@@ -18,18 +18,15 @@ export default function ScheduledApptBox(props) {
     const [checkInOpen, setCheckInOpen] = useState(false);
 
     return(
-    <div>
-        <CheckInDialog appointments={props.scheduled} open={checkInOpen} onClose={() => {setCheckInOpen(false)}}/>
-            <Card style={{marginTop:10}}>
-                <TableRow style={{display:'flex', justifyContent:'space-between'}}>
-                    <TableCell >{props.scheduled.time}</TableCell>
-                    <TableCell >{props.scheduled.dogName}</TableCell>
-                    <TableCell >{props.scheduled.dogType}</TableCell>
-                    <TableCell >{props.scheduled.bather}</TableCell>
-                    <TableCell >{props.scheduled.groomer}</TableCell>
-                    <TableCell  onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
-                </TableRow>
-            </Card>
-    </div>
+        <TableRow>
+            <TableCell align="center" component="th" scope="row">{props.scheduled.time}</TableCell>
+            <TableCell align="center">{props.scheduled.dogName}</TableCell>
+            <TableCell align="center">{props.scheduled.dogType}</TableCell>
+            <TableCell align="center">{props.scheduled.bather}</TableCell>
+            <TableCell align="center">{props.scheduled.groomer}</TableCell>
+            <TableCell align="right" onClick={() => {setCheckInOpen(true)}}><Button variant="contained" color="primary">Check-In</Button></TableCell>
+            <CheckInDialog style={{marginTop:10}} scheduled={props.scheduled} open={checkInOpen} onClose={() => {setCheckInOpen(false)}}/>
+        </TableRow>
+
     )
 }

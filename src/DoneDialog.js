@@ -13,22 +13,30 @@ import FormControl from '@material-ui/core/FormControl';
 import { db, snapshotToArray } from "./firebase";
 
 export default function Done (props) {
-  const [bather, setBather] = useState("")
-  const [groomer, setGroomer] = useState("")
-  const [groomNotes, setGroomNotes] = useState("")
-  const [quote, setQuote] = useState("")
-  const [pickup, setPickup] = useState("")
+  const [bather, setBather] = useState(props.appointments.bather)
+  const [groomer, setGroomer] = useState(props.appointments.groomer)
+  const [groomNotes, setGroomNotes] = useState(props.appointments.groomNotes)
+  const [quote, setQuote] = useState(props.appointments.quote)
+  const [pickup, setPickup] = useState(props.appointments.pickup)
   const [employees, setEmployees] = useState([]);
 
   const handleSaveAppointment = () => {
     db.collection("appointments")
       .doc(props.appointments.id)
-      .update(
-        {groomNotes: groomNotes,
+      .update({
+        groomNotes: groomNotes,
         quote: quote,
         pickup: pickup,
-        status: "complete"
+        status: "complete",
+        bather: bather,
+        groomer: groomer,
         }).then(() => {
+          setBather("");
+          setGroomer("");
+          setGroomNotes("");
+          setQuote("");
+          setPickup("");
+          setEmployees([]);
           props.onClose();
         })
   }
@@ -46,6 +54,7 @@ export default function Done (props) {
         <DialogTitle>New Appointment</DialogTitle>
         <DialogContent>
           <TextField
+            disabled
             autoFocus
             margin="dense"
             id="name"
@@ -55,6 +64,7 @@ export default function Done (props) {
             defaultValue={props.appointments.time}
           />
           <TextField
+            disabled
             margin="dense"
             id="name"
             label="Dog Name"
@@ -63,6 +73,7 @@ export default function Done (props) {
             defaultValue={props.appointments.dogName}
           />
           <TextField
+            disabled
             margin="dense"
             id="name"
             label="Dog Type"
@@ -116,8 +127,8 @@ export default function Done (props) {
             fullWidth
             multiline
             rows="4"
-            onChange={(e) => {setGroomNotes(e.target.value)}}
             defaultValue={props.appointments.groomNotes}
+            onChange={(e) => {setGroomNotes(e.target.value)}}
           />
           <TextField
             margin="dense"
@@ -125,8 +136,8 @@ export default function Done (props) {
             label="Estimated Quote"
             type="number"
             fullWidth
-            onChange={(e) => {setQuote(e.target.value)}}
             defaultValue={props.appointments.quote}
+            onChange={(e) => {setQuote(e.target.value)}}
           />
           <TextField
             margin="dense"
@@ -134,8 +145,8 @@ export default function Done (props) {
             label="Pickup Time"
             type="text"
             fullWidth
-            onChange={(e) => {setPickup(e.target.value)}}
             defaultValue={props.appointments.pickup}
+            onChange={(e) => {setPickup(e.target.value)}}
           />
         </DialogContent>
         <DialogActions>
